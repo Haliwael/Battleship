@@ -1,0 +1,39 @@
+html{height: 100vh;}
+body{
+    height: 100vh;
+    overflow-y: hidden;
+   
+}
+.title{
+    text-align: center;
+}
+.game{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.board-1,.board-2{
+    display: grid;
+    height: 200px;
+    width: 200px;
+    
+    grid-template-columns: repeat(5,1fr);
+    grid-template-rows: repeat(5,1fr)
+}
+.board-1-squares,.board-2-squares{
+    border: 1px solid rgb(231, 130, 130);
+    cursor: crosshair;
+}
+
+.s{
+    height: 20px;
+    width: 20px;
+    margin-left: 10px;
+    border: 1px solid black;
+}
+
+
+
+
