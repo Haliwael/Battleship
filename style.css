@@ -4,10 +4,11 @@ body{
     overflow-y: hidden;
    
 }
-.title{
+h1{
     text-align: center;
+
 }
-.game{
+.main{
     height: 100%;
     display: flex;
     justify-content: center;
@@ -16,23 +17,26 @@ body{
 }
 .board-1,.board-2{
     display: grid;
-    height: 200px;
-    width: 200px;
-    
+    height: 500px;
+    width: 500px;
+    gap: 1px;
     grid-template-columns: repeat(5,1fr);
-    grid-template-rows: repeat(5,1fr)
+    grid-template-rows: repeat(5,1fr);
 }
-.board-1-squares,.board-2-squares{
-    border: 1px solid rgb(231, 130, 130);
+.squares{
+    position: relative;
+    border: 1px solid black;
     cursor: crosshair;
+    
+}
+.dragable{
+    height: 100%;
+    width: 100%;
+    border: 3px solid red;
 }
 
-.s{
-    height: 20px;
-    width: 20px;
-    margin-left: 10px;
-    border: 1px solid black;
-}
+
+
 
 
 
