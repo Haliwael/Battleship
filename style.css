@@ -16,6 +16,7 @@ h1{
     gap: 20px;
 }
 .board-1,.board-2{
+    
     display: grid;
     height: 500px;
     width: 500px;
@@ -34,7 +35,13 @@ h1{
     width: 100%;
     border: 3px solid red;
 }
+.hitted{
 
+}
+.turn{
+    filter: blur(2px);
+    pointer-events: none;
+}
 
 
 

@@ -44,16 +44,8 @@ class gameboard{
         
     }
     receiveAttack(x,y){
-        for(let i = 0;i<this.ships.length;i++){
-            let shipX = this.ships[i].x + this.ships[i].ship.length - 1 
-            if(this.ships[i].y == y && this.ships[i].x <= x && shipX >= x && this.ships[i].hp != 0){
-                this.ships[i].ship.hit()
-                this.ships[i].hp--;
-            }
-            else{
-                this.board[x][y] = 'X'
-            }
-        }
+
+        this.board[x][y] = 'X'
 
     }
     checkShips(){
@@ -100,28 +92,96 @@ function startGame(){
         })
     })
 
+   
+        
+
+
+    let turn = 0;
+    grid2.classList.add("turn")
+    
     grid.addEventListener("click",e =>{
         let c = "";
-        if(e.target.draggable){
-            
-            c = e.target.parentNode.parentNode.children
-        }
-        else{
-            c = e.target.parentNode.children
-            
-        }
-        
-        for(let i =0;i<c.length;i++){
-            
-            if(c[i] === e.target.parentNode || c[i] === e.target){
-                console.log(`row = ${(Math.floor(i/5))} col = ${(i%5)}`);
-                break;
+
+        if(turn == 0){
+            console.log(1);
+            if(e.target.draggable){
+                
+                c = e.target.parentNode.parentNode.children
+            }
+            else{
+                c = e.target.parentNode.children
+                
             }
             
+            for(let i =0;i<c.length;i++){
+                
+                if(c[i] === e.target.parentNode || c[i] === e.target){
+                    p1.receiveAttack(Math.floor(i/5),i%5);
+                    break;
+                }
+                
+            }
+            turn = 1;
+            console.log(p1.board);
+            grid2.classList.remove("turn")
+            grid.classList.add("turn")
+
         }
+        else{
+            console.log("not your turn");
+        }
+        
+        
         
 
     })
+    grid2.addEventListener("click",e =>{
+        if(turn == 1){
+            let c = "";
+            console.log(2);
+            if(e.target.draggable){
+                
+                c = e.target.parentNode.parentNode.children
+            }
+            else{
+                c = e.target.parentNode.children
+                
+            }
+            
+            for(let i =0;i<c.length;i++){
+                
+                if(c[i] === e.target.parentNode || c[i] === e.target){
+                    p2.receiveAttack(Math.floor(i/5),i%5);
+                    break;
+                }
+                
+            }
+            turn = 0;
+            grid.classList.remove("turn")
+            grid2.classList.add("turn")
+            console.log(p2.board);
+
+        }
+        else{
+            console.log("not your turn");
+        }
+
+    })
+    
+    
+        
+            
+        
+       
+            
+
+        
+
+
+    
+    
+    
+    
 
 }
 startGame()
