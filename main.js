@@ -131,7 +131,7 @@ function startGame(){
                         grid2.classList.remove("turn")
                         grid.classList.add("turn")
                         break;
-                        p
+                        
 
                     }
                 }
