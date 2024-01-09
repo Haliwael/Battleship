@@ -19,9 +19,9 @@ class ship{
 class gameboard{
     constructor(){
         this.board = [
+            [1,0,1,0,0],
             [0,0,0,0,0],
-            [0,0,0,0,0],
-            [0,0,0,0,0],
+            [0,0,0,1,0],
             [0,0,0,0,0],
             [0,0,0,0,0],
            
@@ -44,15 +44,19 @@ class gameboard{
         
     }
     receiveAttack(x,y){
-
-        this.board[x][y] = 'X'
+    
+        this.board[x][y] = 0
+        
 
     }
     checkShips(){
-        for(let i = 0;i<this.ships.length;i++){
-           if(this.ships.hp != 0){
-                return;
-           }
+        for(let i = 0;i<5;i++){
+            for(let j = 0;j<5;j++){
+                if(this.board[i][j] == 1){
+                    return
+                }
+
+            }
         }
         return 0
     }
@@ -65,13 +69,18 @@ function playersTurn(board){
 }
 
 function startGame(){
+    let isShipsPlaced = true;
+    const hit = '<span class="material-symbols-outlined" style="pointer-events: none; user-select:none;">close</span>';
+    const bnt = document.querySelector('button')
     const p1 = new player()
     const p2 = new player()
     const item = document.querySelectorAll(".dragable")
+    const c = document.querySelector(".container")
     const containers = document.querySelectorAll(".squares")
     const grid = document.querySelector(".board-1")
     const grid2 = document.querySelector(".board-2")
-    item.forEach((i) =>{
+    if(!isShipsPlaced){
+        item.forEach((i) =>{
         i.addEventListener("dragstart",()=>{
             i.classList.add('dragging')
 
@@ -79,23 +88,21 @@ function startGame(){
         i.addEventListener("dragend",()=>{
             i.classList.remove('dragging')
         })
-    })
-    containers.forEach((container)=>{
-        container.addEventListener('dragover',(e)=>{
-            e.preventDefault()
-            const draggable = document.querySelector(".dragging")
-            
-            if(container.childElementCount == 0 ){
-                container.appendChild(draggable)
-            }
-            
         })
-    })
+        containers.forEach((container)=>{
+            container.addEventListener('dragover',(e)=>{
+                e.preventDefault()
+                const draggable = document.querySelector(".dragging")
+                
+                if(container.childElementCount == 0 ){
+                    container.appendChild(draggable)
+                }
+                
+            })
+        })
 
-   
-        
-
-
+    }
+    
     let turn = 0;
     grid2.classList.add("turn")
     
@@ -103,7 +110,7 @@ function startGame(){
         let c = "";
 
         if(turn == 0){
-            console.log(1);
+            
             if(e.target.draggable){
                 
                 c = e.target.parentNode.parentNode.children
@@ -116,20 +123,28 @@ function startGame(){
             for(let i =0;i<c.length;i++){
                 
                 if(c[i] === e.target.parentNode || c[i] === e.target){
-                    p1.receiveAttack(Math.floor(i/5),i%5);
-                    break;
+                    if(!c[i].classList.contains("hitted")){
+                        p1.receiveAttack(Math.floor(i/5),i%5);
+                        c[i].innerHTML = hit
+                        c[i].classList.add("hitted")
+                        turn = 1;
+                        grid2.classList.remove("turn")
+                        grid.classList.add("turn")
+                        break;
+                        p
+
+                    }
                 }
                 
             }
-            turn = 1;
-            console.log(p1.board);
-            grid2.classList.remove("turn")
-            grid.classList.add("turn")
+            if(p1.checkShips() == 0){
+                console.log("player 2 won");
+            }
+            
+            
 
         }
-        else{
-            console.log("not your turn");
-        }
+        
         
         
         
@@ -138,7 +153,7 @@ function startGame(){
     grid2.addEventListener("click",e =>{
         if(turn == 1){
             let c = "";
-            console.log(2);
+            
             if(e.target.draggable){
                 
                 c = e.target.parentNode.parentNode.children
@@ -148,23 +163,33 @@ function startGame(){
                 
             }
             
+             
             for(let i =0;i<c.length;i++){
                 
                 if(c[i] === e.target.parentNode || c[i] === e.target){
-                    p2.receiveAttack(Math.floor(i/5),i%5);
-                    break;
+                    if(!c[i].classList.contains("hitted")){
+                        p2.receiveAttack(Math.floor(i/5),i%5);
+                        c[i].innerHTML = hit
+                        c[i].classList.add("hitted")
+                        turn = 0;
+                        grid.classList.remove("turn")
+                        grid2.classList.add("turn")
+                        
+                       
+                        break;
+
+                    }
                 }
                 
             }
-            turn = 0;
-            grid.classList.remove("turn")
-            grid2.classList.add("turn")
-            console.log(p2.board);
+            if(p2.checkShips() == 0){
+                console.log("player 1 won");
+            }
+         
+            
 
         }
-        else{
-            console.log("not your turn");
-        }
+        
 
     })
     

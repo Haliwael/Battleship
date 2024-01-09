@@ -26,6 +26,9 @@ h1{
 }
 .squares{
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 1px solid black;
     cursor: crosshair;
     
@@ -36,7 +39,7 @@ h1{
     border: 3px solid red;
 }
 .hitted{
-
+    
 }
 .turn{
     filter: blur(2px);
