@@ -1,5 +1,10 @@
 let gameStatus = 1
-
+const item = document.querySelectorAll(".dragable")
+const containers = document.querySelectorAll(".squares")
+const grid = document.querySelector(".board-1")
+const grid2 = document.querySelector(".board-2")
+const btn = document.querySelector("button")
+let isShipsPlaced = false;
 class ship{
     constructor(length){
         this.length = length;
@@ -30,18 +35,8 @@ class gameboard{
         
         
     }
-    placeShip(x,y,shipLength){
-        const s = {
-            ship : new ship(shipLength),
-            x : x,
-            y : y,
-            hp : shipLength
-        }
-        this.ships.push(s)
-        for(let i = x;i<shipLength+x;i++){
-            this.board[y][i] = 1;
-        }
-        
+    placeShip(ship){
+        this.ships.push(ship)
     }
     receiveAttack(x,y){
     
@@ -63,49 +58,73 @@ class gameboard{
 
 }
 class player extends gameboard{}
+const p1 = new player()
+const p2 = new player()
 
-function playersTurn(board){
+
+
+item.forEach((i) =>{
+    i.addEventListener("dragstart",()=>{
+        if(!isShipsPlaced){
+            i.classList.add('dragging')
+        }
+        
+
+    })
+    i.addEventListener("dragend",()=>{
+        if (!isShipsPlaced) {
+            i.classList.remove('dragging')
+        }
+    })
+    })
+    containers.forEach((container)=>{
+        container.addEventListener('dragover',(e)=>{
+            e.preventDefault()
+            const draggable = document.querySelector(".dragging")
+            
+            if(container.childElementCount == 0 && !isShipsPlaced ){
+                container.appendChild(draggable)
+            }
+            
+        })
+    })
+
+//button to start the game 
+btn.addEventListener("click",()=>{
     
+    
+    placingShips(p1,grid)
+    placingShips(p2,grid2)
+    startGame()
+})
+
+
+function placingShips(p,grid){
+    for(let i = 0;i<grid.children.length;i++){
+        
+        if(grid.children[i].children.length != 0){
+            
+            p.placeShip(getShipsCordonates(grid.children[i].children[0],grid))
+            
+        }
+    }
+}
+function getShipsCordonates(ship,g){
+    for(let i = 0;i<g.children.length;i++){
+      
+        if(g.children[i].children[0] == ship){
+            return {x : Math.floor(i/5), y : i%5}
+        }
+    }
 }
 
+
 function startGame(){
-    let isShipsPlaced = true;
     const hit = '<span class="material-symbols-outlined" style="pointer-events: none; user-select:none;">close</span>';
-    const bnt = document.querySelector('button')
-    const p1 = new player()
-    const p2 = new player()
-    const item = document.querySelectorAll(".dragable")
-    const c = document.querySelector(".container")
-    const containers = document.querySelectorAll(".squares")
-    const grid = document.querySelector(".board-1")
-    const grid2 = document.querySelector(".board-2")
-    if(!isShipsPlaced){
-        item.forEach((i) =>{
-        i.addEventListener("dragstart",()=>{
-            i.classList.add('dragging')
-
-        })
-        i.addEventListener("dragend",()=>{
-            i.classList.remove('dragging')
-        })
-        })
-        containers.forEach((container)=>{
-            container.addEventListener('dragover',(e)=>{
-                e.preventDefault()
-                const draggable = document.querySelector(".dragging")
-                
-                if(container.childElementCount == 0 ){
-                    container.appendChild(draggable)
-                }
-                
-            })
-        })
-
-    }
     
+    isShipsPlaced = true;
     let turn = 0;
     grid2.classList.add("turn")
-    
     grid.addEventListener("click",e =>{
         let c = "";
 
@@ -138,7 +157,7 @@ function startGame(){
                 
             }
             if(p1.checkShips() == 0){
-                console.log("player 2 won");
+                return "player 2 won"
             }
             
             
@@ -183,7 +202,7 @@ function startGame(){
                 
             }
             if(p2.checkShips() == 0){
-                console.log("player 1 won");
+                return "player 1 won"
             }
          
             
@@ -192,21 +211,6 @@ function startGame(){
         
 
     })
-    
-    
-        
-            
-        
-       
-            
-
-        
-
-
-    
-    
-    
-    
-
 }
-startGame()
+
+

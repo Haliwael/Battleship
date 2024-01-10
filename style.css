@@ -1,8 +1,14 @@
 html{height: 100vh;}
 body{
     height: 100vh;
-    overflow-y: hidden;
+    
    
+}
+.header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 h1{
     text-align: center;
@@ -44,6 +50,13 @@ h1{
 .turn{
     filter: blur(2px);
     pointer-events: none;
+}
+.ships{
+    height: 50px;
+    width: 50px;
+}
+button{
+    margin: 5px;
 }
 
 
