@@ -58,6 +58,10 @@ h1{
 button{
     margin: 5px;
 }
+.gameStarted{
+    display: none;
+}
+
 
 
 
