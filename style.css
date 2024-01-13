@@ -1,8 +1,8 @@
-html{height: 100vh;}
-body{
-    height: 100vh;
-    
-   
+html { height:100%; }
+body { position:absolute; top:0; bottom:0; right:0; left:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .header{
     display: flex;
@@ -14,7 +14,13 @@ h1{
     text-align: center;
 
 }
+.container{
+    
+    padding: 10px;
+}
+
 .main{
+    margin-top: 20px;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -24,14 +30,14 @@ h1{
 .board-1,.board-2{
     
     display: grid;
-    height: 500px;
-    width: 500px;
+    height: 250px;
+    width: 250px;
+    margin: 10px;
     gap: 1px;
     grid-template-columns: repeat(5,1fr);
     grid-template-rows: repeat(5,1fr);
 }
 .squares{
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,12 +54,11 @@ h1{
     
 }
 .turn{
-    filter: blur(2px);
     pointer-events: none;
 }
 .ships{
-    height: 50px;
-    width: 50px;
+    height: 25px;
+    width: 25px;    
 }
 button{
     margin: 5px;
@@ -61,9 +66,38 @@ button{
 .gameStarted{
     display: none;
 }
-
-
-
+.gameOver{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.pop-up{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    width: 250px;
+    background-color: white;
+    border-radius: 3px;
+}
+.gameOver.active{
+    display: flex;
+}
+p{
+    color: black;
+}
+.player-1,.player-2{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 
 
